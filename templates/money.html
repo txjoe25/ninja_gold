@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Money</title>
+	<style type="text/css">
+		form{
+			display: inline-block;
+			widows: 20%;
+		}
+		#activity{
+			height: 10em;
+			overflow: scroll;
+		}
+		.red{
+			color:red;
+		}
+		.green{
+			color:green;
+		}
+	</style>
+</head>
+<body>
+	<p>Your Gold:<strong>{{session['gold']}}</strong></p>
+	<form action="/process" method="post">Farm<br>(earns 10-20 Gold)<br>
+		<input type="hidden" name="building" value="farm" />
+		<input type="submit" value="Find Gold!"/>
+	</form>
+	<form action="/process" method="post">Cave<br>(earns 5-10 Gold)<br>
+		<input type="hidden" name="building" value="cave" />
+		<input type="submit" value="Find Gold!"/>
+	</form>
+	<form action="/process" method="post">House<br>(earns 2-5 Gold)<br>
+		<input type="hidden" name="building" value="house" />
+		<input type="submit" value="Find Gold!"/>
+	</form>
+	<form action="/process" method="post">Casino<br>(earns 0-50 Gold)<br>
+		<input type="hidden" name="building" value="casino" />
+		<input type="submit" value="Find Gold!"/>
+	</form>
+		<form>Activities:<br>
+		<textarea name="record" rows="10" cols="20">test
+		</textarea>
+	</form>
+	<div>
+		Activities:
+		{% for entry in session['log'] %}
+			{% if entry['amount'] > 0 %}
+			<p class = 'green'>Earned {{entry['amount']}} Gold from {{entry['building']}}</p>
+			{%else%}
+			<p class = "red">Lost {{entry['amount']|abs}} Gold from {{entry['building']}}</p>
+			{% endif %}
+		{% endfor %}
+
+	</div>
+
+</body>
+</html>
